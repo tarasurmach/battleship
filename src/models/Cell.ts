@@ -80,7 +80,7 @@ export class OccupiedByCPU extends OccupiedState {
         super(cellCtx);
     }
     get className() {
-        return "empty"
+        return "cell"
     }
 }
 export class HitState implements CellState {

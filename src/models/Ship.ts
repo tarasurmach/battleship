@@ -1,4 +1,4 @@
-import {IBoard, StateClassName} from "./Board/Board.ts";
+import {IBoard} from "./Board/Board.ts";
 import {IObservable, Observer} from "./Observer/ObservableShip.js";
 
 
