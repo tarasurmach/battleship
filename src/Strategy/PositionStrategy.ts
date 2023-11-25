@@ -1,6 +1,7 @@
 import {IPosition} from "../models/Ship.js";
-import {HumanBoard} from "../models/Board/Board.ts";
+
 import {Cell} from "../models/Cell.js";
+import {HumanBoard} from "../models/Board/HumanBoard.ts";
 
 
 export interface PositionStrategy{
