@@ -202,12 +202,11 @@ export abstract class BaseBoard implements IBoard {
         cellEl.className = cell.className;
     }
     protected attachHoverListener(cellEl:HTMLSpanElement) {
-        console.log("attach")
         cellEl.addEventListener("mouseenter", this.handleMouseEnter);
         cellEl.addEventListener("mouseleave", this.handleMouseLeave);
     }
     protected detachHoverListener(cellEl:HTMLSpanElement) {
-        console.log("detach")
+
         cellEl.removeEventListener("mouseenter", this.handleMouseEnter);
         cellEl.removeEventListener("mouseleave", this.handleMouseLeave);
     }
@@ -226,7 +225,7 @@ export abstract class BaseBoard implements IBoard {
                     method({row:row+1, cell:cell-1}, adjacentCellClass);
                 }
                 if(i+1===length) {
-                    console.log(adjacentCellClass)
+
                     method({row, cell:cell+i+1}, adjacentCellClass);
                     method({row:row-1, cell:cell+i+1}, adjacentCellClass);
                     method({row:row+1, cell:cell + i +1}, adjacentCellClass);

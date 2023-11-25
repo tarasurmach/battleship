@@ -64,8 +64,6 @@ export class GameManager implements IGameManager{
     }
 
     finishGame() {
-        //Todo
-
         const gameOverWindow = document.createElement("div");
         gameOverWindow.className = "game-over";
         const pElement = document.createElement("p");

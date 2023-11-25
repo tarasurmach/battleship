@@ -33,7 +33,6 @@ export class HumanPlayer extends BasePlayer implements Human, IObservable {
 
         if(this.ships[shipType]) {
             listEl.classList.add("hidden");
-            //listEl.textContent = ""
             return listEl;
         }
         if(shipType === this.currentShipType) {
@@ -53,14 +52,12 @@ export class HumanPlayer extends BasePlayer implements Human, IObservable {
         return shipList;
     }
     rerenderList() {
-        console.log(this.options.lastElementChild)
         this.options.lastElementChild?.replaceWith(this.renderShipList())
     }
     handleClick = ({target}:MouseEvent) => {
         if((target as HTMLElement).tagName !== "LI" || (target as HTMLElement).classList.contains("hidden")) return;
         const {textContent} = target as HTMLLIElement;
         if(!textContent) return;
-        console.log("upd")
         this.updateCurrentShip(textContent as ShipType);
 
     }
@@ -103,11 +100,10 @@ export class HumanPlayer extends BasePlayer implements Human, IObservable {
                 break;
             }
         }
-        console.log("notifying")
 
     }
 
-    //Todo: Notify observers(reattachListeners, renderShipList)
+
     notify() {
         this.observers.forEach(observer => {
             console.log(observer.name)

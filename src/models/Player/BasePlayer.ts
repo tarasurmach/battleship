@@ -1,7 +1,5 @@
 import {Direction, Ship, shipMap, ShipType} from "../Ship.ts";
 
-
-
 export interface Player {
     addShip(ship:Ship):void;
     receiveHit(type:ShipType):void;

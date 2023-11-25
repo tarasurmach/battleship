@@ -9,7 +9,7 @@ export interface PositionStrategy{
     registerHit(pos:IPosition):void;
     registerMiss(pos:IPosition):void;
 }
-// noinspection JSMethodCanBeStatic
+
 export class PositionSearching implements PositionStrategy {
     protected pos:IPosition;
     private playerBoard:HumanBoard;
@@ -24,29 +24,26 @@ export class PositionSearching implements PositionStrategy {
             return this.position
         }
         this.position = this.getTarget() ?? this.randomPosition();
-        /*if(!this.position) {
-            this.position = this.randomPosition()
-        }*/
+        console.log(this.hits)
         return this.position;
     }
     public registerHit(pos:IPosition) {
         if(this.areHits()) {
-            // Todo[X]: if there are cells somewhere in-between current hits, unshift them to targets array; - Done;
             const {row, cell} = this.getNextHit()
             const sameRow = pos.row === row;
             const surroundings = this.player.getSurroundingCells({row, cell}) as Cell[];
             if(sameRow) {
                 this.removeAdjacentRows(surroundings, pos)
-                const hitsLength = Math.abs(pos.cell - (+this.hits[0].charAt(1)));
+                const hitsLength = Math.abs(pos.cell - (+(this.hits.shift() as string).charAt(1))); //mutating!! charAt -> .shift()
                 if(hitsLength <= 5) {
-                    this.targets.unshift(this.posToString({row:pos.row, cell:pos.cell+1 /*hitCellCell +1*/}))
-                    this.targets.unshift(this.posToString({row:pos.row, cell:pos.cell -1 /*hitCellCell +1*/}))
+                    this.targets.unshift(this.posToString({row:pos.row, cell:pos.cell+1 }))
+                    this.targets.unshift(this.posToString({row:pos.row, cell:pos.cell -1}))
                 }
             }
             const sameCol = pos.cell === cell;
             if(sameCol) {
                 this.removeAdjacentCols(surroundings, pos);
-                const hitsLength = Math.abs(pos.row - (+this.hits[0].charAt(0)));
+                const hitsLength = Math.abs(pos.row - (+(this.hits.shift() as string).charAt(0))); //mutating!!
                 if(hitsLength <= 5) {
                     this.targets.unshift(this.posToString({row:pos.row+1, cell:pos.cell}));
                     this.targets.unshift(this.posToString({row:pos.row-1, cell:pos.cell}));
@@ -77,7 +74,7 @@ export class PositionSearching implements PositionStrategy {
         this.removeTargets(targetsToRemove)
     }
     getTarget() {
-        let target;
+        let target:string;
         do {
             target = this.targets.shift() as string;
             if(!target) return;
@@ -153,39 +150,4 @@ export class PositionSearching implements PositionStrategy {
     }
 }
 
-/*
-export class RandomSearching extends PositionSearching {
-    constructor(player:Board) {
-        super(player);
-    }
-    public searchPositionToAttack() {
-        let randomPos;
-        do {
-            randomPos = this.player.generateRandomPosition();
-        }while (!this.player.isValidForHit(randomPos))
 
-        return randomPos;
-    }
-
-}
-export class TargetingSearching  extends PositionSearching implements TargetingSearching {
-    private targets:IPosition[]=[];
-    private direction:Direction;
-    constructor(player:Board) {
-        super(player);
-    }
-    public searchPositionToAttack() {
-        const target = this.targets.pop();
-        this.position = target as IPosition;
-        return this.position
-    }
-    availableTargets() {
-        return this.targets.length > 0;
-    }
-    set dir(newDir:Direction) {
-        this.direction = newDir;
-    }
-    get dir() {
-        return this.direction
-    }
-}*/

@@ -1,11 +1,9 @@
 import {ShipType} from "./Ship.js";
-//Todo: Instead of changing whole cell state, simply add new class on mouse over and mouse leave
 interface CellState {
     handleClick():void;
     readonly className:string;
 }
 export class Cell {
-
 
     public isHit:boolean = false;
     public isOccupied = false;
@@ -14,15 +12,11 @@ export class Cell {
     private state:CellState;
     constructor(private row:number, private cell:number) {
         this.changeState(new EmptyState(this))
-        //this.updateView()
-        //console.log(this.state)
     }
     changeState(newState:CellState):void {
         this.state = newState;
 
     }
-
-
 
     deployShip(ship:ShipType, playerType:"cpu"|"human"="cpu"):void {
         const newState = playerType === "cpu" ? new OccupiedByCPU(this) : new OccupiedState(this)

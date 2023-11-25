@@ -105,7 +105,7 @@ export class HumanBoard extends BaseBoard {
     }
     receiveAttack = async () => {
         if(this.gameManager.winner) return;
-        await this.delay()
+        //await this.delay()
         const pos = this.computerStrategy.searchPositionToAttack();
         if(!this.isValidForHit(pos)) {
             alert("This position is not available for the attack");
