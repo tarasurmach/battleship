@@ -1,0 +1,201 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+table, th, td {
+  border: 1px solid;
+}
+td {
+  padding: 0.5rem;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.vanilla:hover {
+  filter: drop-shadow(0 0 2em #3178c6aa);
+}
+
+.card {
+  padding: 2em;
+}
+
+
+.read-the-docs {
+  color: #888;
+}
+.board {
+  width: 400px;
+  height: 400px;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  
+}
+.container {
+  display: flex;
+  gap: 1rem;
+}
+.options {
+  display: flex;
+  flex-direction: column;
+  gap:0.8rem;
+  margin-top: 2rem;
+}
+.row {
+  flex: 33%;
+  display: flex;
+  flex-direction: row;
+
+  background: beige;
+}
+.cell {
+  flex: 33%;
+  height: 100%;
+  border: 1px inset white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  font-weight: bolder;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.hover {
+  cursor: pointer;
+}
+.x:hover::before,
+.x:hover::after {
+
+  content: "";
+  display: block;
+  margin-top: -3px;
+  width: 30px;
+  height: 3px;
+  background: #000;
+  border-radius: 10px;
+  position: absolute;
+}
+.x:hover::before {
+  -webkit-transform: rotate(-120deg);
+  -ms-transform: rotate(-120deg);
+  transform: rotate(-45deg);
+}
+.x:hover::after {
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.empty {
+  background-color: white;
+}
+.missed {
+  background-color: #747bff;
+}
+.occupied {
+  background-color: green;
+}
+.hit {
+  background-color: red;
+}
+.sunk {
+  background-color: #A47015;
+}
+.ship-list {
+  list-style: none;
+}
+.ship-list li{
+  cursor: pointer;
+}
+.hidden {
+  visibility: hidden;
+}
+.ship-list li:hover {
+  opacity: 0.6;
+  transition-duration: 300ms;
+}
+.ship-list > .current {
+  text-decoration: underline;
+  color: #A47015;
+
+}
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
