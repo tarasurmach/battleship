@@ -22,8 +22,7 @@ export class HumanPlayer extends BasePlayer implements Human, IObservable {
         const options = document.createElement("div");
         options.className = "options";
 
-        options.appendChild(this.renderBtn());
-        options.appendChild(this.renderShipList());
+        options.append(this.renderBtn(), this.renderShipList());
         this.options = options
     }
     renderShip(shipType:ShipType) {

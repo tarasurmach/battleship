@@ -4,6 +4,7 @@ import {IGameManager} from "../GameManager.ts";
 import {Direction, IPosition, Ship} from "../Ship.ts";
 import {Cell} from "../Cell.ts";
 import {BaseBoard, EventWithCurrentTarget} from "./Board.ts";
+import {autoBind} from "../../utils/decorator.ts";
 
 export class HumanBoard extends BaseBoard {
     private computerStrategy:PositionStrategy;
@@ -140,6 +141,19 @@ export class HumanBoard extends BaseBoard {
         this.computerStrategy = new PositionSearching(this);
         this.boardEl.addEventListener("click", this.handleClick);
     }
+    @autoBind
+    placeShips() {
+        do {
+            let pos:IPosition;
+            const { length} = this.player.currentProperties();
+            const direction = Math.random() < 0.5 ? "horizontal" : "vertical";
+            do {
+                pos = this.generateRandomPosition();
+            }while (!this.isValidPlacement({pos, direction, length}));
+            this.placeShip(pos, direction)
+        }while (!this.player.allShipsPlaced())
+    }
+
     public startGame() {
         if(!this.player.allShipsPlaced()) {
             //alert("Cannot start the game until all ships are placed!");

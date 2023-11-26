@@ -12,7 +12,7 @@ export class ComputerBoard extends BaseBoard {
         this.player = new BasePlayer()
         this.boardEl = this.renderBoard();
         this.rootEl.append(this.boardEl);
-        this.placeShips();
+        super.placeShips();
         this.startGame();
     }
     protected renderCell({cell, row}: IPosition): HTMLSpanElement {

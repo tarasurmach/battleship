@@ -38,7 +38,7 @@ export class BasePlayer implements Player{
                 this.length = shipMap[this.currentShipType]
                 break;
             }else {
-                this.currentShipType = null as ShipType;
+                this.currentShipType = (null as unknown) as ShipType;
             }
         }
 

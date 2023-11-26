@@ -1,6 +1,7 @@
 import {Cell, stateClassMap} from "../Cell.ts";
 import {Direction, IPosition, Ship, shipMap} from "../Ship.ts";
 import {IGameManager} from "../GameManager.ts";
+import {autoBind} from "../../utils/decorator.ts";
 export type EventWithTarget<T extends HTMLElement> = MouseEvent & {target:T};
 export type EventWithCurrentTarget<T extends HTMLElement> = MouseEvent & {currentTarget:T};
 
@@ -8,7 +9,7 @@ const ROWS = 10;
 const COLS = 10;
 export type Grid = Cell[][]
 export interface IBoard {
-    generateBoard();
+    generateBoard():Cell[][];
     renderBoard():HTMLDivElement;
     receiveAttack(arg?:any):Promise<void>;
     placeShip(pos:IPosition, direction:Direction):void;
@@ -51,9 +52,9 @@ export abstract class BaseBoard implements IBoard {
         this.grid.forEach((row, i)=>{
             boardEl.append(this.renderRow(row, i))
         });
-        container.appendChild(boardEl);
 
-        return container
+        container.appendChild(boardEl);
+        return container;
     }
     renderRow(row:Cell[], index:number) {
         const div = document.createElement("div");
@@ -189,6 +190,7 @@ export abstract class BaseBoard implements IBoard {
 
         }
     }
+
     generateRandomPosition() {
         const randomRow = this.grid[Math.floor(Math.random()*this.grid.length)];
         return randomRow[Math.floor(Math.random()*randomRow.length)].pos;
