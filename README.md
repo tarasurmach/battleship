@@ -34,7 +34,7 @@ This project was built with the aim of solidifying comprehension of OOP principl
 - TypeScript
 - HTML
 - CSS
-
+- Vite
 
 
 
