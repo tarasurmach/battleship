@@ -133,11 +133,6 @@ export class HumanBoard extends BaseBoard {
         this.generateBoard();
         this.boardEl = this.renderBoard();
         this.player = new HumanPlayer(this.boardEl, this.reattachListeners, this.placeShips);
-        //this.player.addObserver(this.reattachListeners.bind(this));
-        //this.player.addObserver(this.placeShips.bind(this))
-        //this.player.renderOptions()
-        //this.boardEl.appendChild(this.player.renderBtn());
-        //this.boardEl.appendChild(this.player.renderShipList(this.reattachListeners.bind(this)))
         this.rootEl.appendChild(this.boardEl);
 
         this.computerStrategy = new PositionSearching(this);
