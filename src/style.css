@@ -87,6 +87,17 @@ td {
   flex-direction: column;
   gap:0.8rem;
   margin-top: 2rem;
+  max-width: inherit;
+}
+.options > button {
+  width: 265px;
+}
+#turn {
+  color: #4d59fb;
+  font-size: 1.2rem;
+  font-style: oblique;
+  font-weight: 600;
+
 }
 .row {
   flex: 33%;

@@ -1,6 +1,8 @@
 import {IObservable, Observer} from "../Observer/ObservableShip.ts";
 import {shipMap, ShipType} from "../Ship.ts";
 import {BasePlayer, Player} from "./BasePlayer.ts";
+import {HumanBoard} from "../Board/HumanBoard.ts";
+import {autoBind} from "../../utils/decorator.ts";
 type CB = (flag:boolean)=>void;
 export interface Human extends Player {
     allShipsPlaced():boolean;
@@ -10,10 +12,12 @@ export interface Human extends Player {
     renderOptions():void;
 }
 export class HumanPlayer extends BasePlayer implements Human, IObservable {
-    private observers:Map<string, Observer> = new Map();
+    private observers:Map<keyof HumanBoard, Observer> = new Map();
     private options:HTMLDivElement;
-    constructor(rootEl:HTMLDivElement) {
+    constructor(rootEl:HTMLDivElement, ...listeners:Observer[]) {
         super();
+        console.log(this.addObserver)
+        listeners.forEach(this.addObserver)
         this.renderOptions();
         rootEl.appendChild(this.options);
         this.addObserver(this.rerenderList.bind(this))
@@ -22,7 +26,7 @@ export class HumanPlayer extends BasePlayer implements Human, IObservable {
         const options = document.createElement("div");
         options.className = "options";
 
-        options.append(this.renderBtn(), this.renderShipList());
+        options.append(this.renderBtn(), this.renderBtn2(), this.renderShipList());
         this.options = options
     }
     renderShip(shipType:ShipType) {
@@ -84,6 +88,13 @@ export class HumanPlayer extends BasePlayer implements Human, IObservable {
         this.direction = oldDirection === "horizontal" ? "vertical" : "horizontal";
         (target as HTMLButtonElement).textContent = "Change direction to " + oldDirection;
     }
+    renderBtn2() {
+        console.log(this.observers)
+        const btn = document.createElement<"button">("button");
+        btn.textContent = "Place ships randomly";
+        btn.addEventListener("click", this.observers.get("placeShips") as keyof Observer)
+        return btn;
+    }
     updateCurrentShip(newShipType?: ShipType) {
         if(newShipType !== undefined) {
             this.currentShipType = newShipType;
@@ -104,9 +115,10 @@ export class HumanPlayer extends BasePlayer implements Human, IObservable {
 
 
     notify() {
-        this.observers.forEach(observer => {
-            console.log(observer.name)
-            if(observer.name.includes("reattachListeners")) {
+        this.observers.forEach((observer, key )=> {
+            console.log(observer)
+            if(key === "placeShips") return
+            if(key.includes("reattachListeners")) {
                 console.log("reattach")
                 observer(true)
             }else {
@@ -114,12 +126,15 @@ export class HumanPlayer extends BasePlayer implements Human, IObservable {
             }
         })
     }
+    @autoBind
     addObserver(observer: Observer): () => void {
-        const name = observer.name.split(" ")[1] ?? observer.name;
-
+        const name = (observer.name.split(" ")[1] ?? observer.name ) as keyof HumanBoard;
+        console.log(this)
         if(!this.observers.has(name)) {
+            console.log(name)
             this.observers.set(name, observer);
         }
+        console.log(this.observers)
         return () => {
             if(this.observers.has(name)) {
                 this.observers.delete(name)

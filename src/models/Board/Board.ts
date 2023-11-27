@@ -212,6 +212,7 @@ export abstract class BaseBoard implements IBoard {
         cellEl.removeEventListener("mouseenter", this.handleMouseEnter);
         cellEl.removeEventListener("mouseleave", this.handleMouseLeave);
     }
+    @autoBind
     updateAdjacentCells({pos:{row, cell}, length, direction}:Pick<Ship, "pos"|"length"|"direction">, currentCellClass:StateClassName|"", adjacentCellClass:StateClassName|"", callBack:"updateClassName"|"updateCellState"){
         const horizontal = direction === "horizontal";
         const method = this[callBack].bind(this);

@@ -13,6 +13,7 @@ export class HumanBoard extends BaseBoard {
         super(game, rootEl);
         this.initialize();
     }
+    @autoBind
     reattachListeners(flag:boolean) {
         this.grid.forEach(row=>{
             row.forEach(cellObj=>{
@@ -106,7 +107,7 @@ export class HumanBoard extends BaseBoard {
     }
     receiveAttack = async () => {
         if(this.gameManager.winner) return;
-        //await this.delay()
+        await this.delay()
         const pos = this.computerStrategy.searchPositionToAttack();
         if(!this.isValidForHit(pos)) {
             alert("This position is not available for the attack");
@@ -131,8 +132,9 @@ export class HumanBoard extends BaseBoard {
     private initialize() {
         this.generateBoard();
         this.boardEl = this.renderBoard();
-        this.player = new HumanPlayer(this.boardEl);
-        this.player.addObserver(this.reattachListeners.bind(this));
+        this.player = new HumanPlayer(this.boardEl, this.reattachListeners, this.placeShips);
+        //this.player.addObserver(this.reattachListeners.bind(this));
+        //this.player.addObserver(this.placeShips.bind(this))
         //this.player.renderOptions()
         //this.boardEl.appendChild(this.player.renderBtn());
         //this.boardEl.appendChild(this.player.renderShipList(this.reattachListeners.bind(this)))
@@ -143,6 +145,7 @@ export class HumanBoard extends BaseBoard {
     }
     @autoBind
     placeShips() {
+        console.log("asas")
         do {
             let pos:IPosition;
             const { length} = this.player.currentProperties();
@@ -150,7 +153,8 @@ export class HumanBoard extends BaseBoard {
             do {
                 pos = this.generateRandomPosition();
             }while (!this.isValidPlacement({pos, direction, length}));
-            this.placeShip(pos, direction)
+            this.placeShip(pos, direction);
+            console.log(this.player)
         }while (!this.player.allShipsPlaced())
     }
 
